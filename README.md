@@ -41,6 +41,7 @@
             border-radius: 15px;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
         }
 
         #btnSi {
@@ -68,16 +69,15 @@
 
         #nuevaPantalla h1, #nuevaPantalla p {
             color: #00bfff;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7), 0 0 15px rgba(0, 191, 255, 1);
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7), 0 0 15px rgba(0, 191, 255, 1); /* Mejor contraste */
             font-size: 2.5em;
-            font-weight: bold;
+            font-weight: bold; /* Hace el texto más claro */
         }
 
         .btn-container {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            gap: 20px;
         }
 
     </style>
@@ -113,45 +113,61 @@
         const respuestasNo = [
             "¿De verdad dices que no? 🥺",
             "No puede ser... dime que sí 🥹",
-            "¿Me estás haciendo sufrir a propósito? 😢",
-            "Si dices que no, mi corazón se rompe 💔",
+            "¿Me estás haciendo sufrir de verdad ? 😢",
+            "Si dices que no, mi corazón se va a romper 💔",
             "¡No acepto un no como respuesta! 😤",
             "Dime que es una broma, por favor 🥺",
             "¿Cómo puedes decirme que no? 😭",
             "Si sigues diciendo que no, voy a llorar 😞",
             "Te amo tanto, no me hagas esto 🥺",
             "Dime que sí, por favor 😭",
-            "Si dices que no, te voy a llenar de besos hasta que digas que sí 😘",
+            "Mira Nashlyn esto ya no me está   gustando 😠",
             "Nooo, no me hagas esto 🥺💔",
-            "Si sigues diciendo que no, me voy a derretir de tristeza 🫠",
-            "Voy a contar hasta tres y dirás que sí 😏",
+            "Si sigues diciendo que no, me voy a cabrear enserio 😤",
+            "Voy a contar hasta tres y hay que digas que no para que veas 😡",
             "No juegues con mi corazón así 😖",
-            "Cada vez que dices no, mi amor por ti se multiplica ❤️",
-            "Voy a seguir insistiendo hasta que digas que sí 😘",
-            "Te haré reír tanto que dirás que sí sin darte cuenta 😆",
+            "Cada vez que dices no, me dan más ganas de llorar  😭",
+            "Voy a seguir insistiendo hasta que digas que sí así que nosé como vas hacer 😒",
+            "Te voy hacer feliz  ya dime que sí  por fa  🥹",
             "No puedo imaginar mi San Valentín sin ti 😞",
-            "Eres el amor de mi vida, dime que sí 💕"
+            "Sorry mi amor ahora tendrás que decir que si 😁"
         ];
 
-        // Cambia el mensaje cuando se presiona "No"
+        // Reducir tamaño y hacer desaparecer el botón "No", y hacer crecer el "Sí"
         btnNo.addEventListener('click', () => {
-            if (noCount < respuestasNo.length) {
-                message.innerHTML = respuestasNo[noCount];
+            if (noCount < 20) { // Limita la cantidad de clics antes de desaparecer el botón
+                message.innerHTML = respuestasNo[noCount % respuestasNo.length];
+                let scaleSizeNo = 1 - noCount * 0.05; // Reduce el tamaño del botón "No"
+                let scaleSizeSi = 1 + noCount * 0.05; // Aumenta el tamaño del botón "Sí"
+                btnNo.style.transform = `scale(${scaleSizeNo})`; // Cambia el tamaño del botón "No"
+                btnSi.style.transform = `scale(${scaleSizeSi})`; // Cambia el tamaño del botón "Sí"
                 noCount++;
+            } else {
+                btnNo.style.display = 'none'; // Elimina el botón "No" después de 20 clics
             }
         });
 
         // Muestra la segunda pantalla cuando se presiona "Sí"
         btnSi.addEventListener('click', () => {
-            pantallaInicial.style.display = 'none';
-            nuevaPantalla.style.display = 'flex';
+            pantallaInicial.style.display = 'none'; // Ocultar la pantalla inicial
+            nuevaPantalla.style.display = 'flex'; // Mostrar la nueva pantalla
 
+            // Aseguramos que las frases personalizadas aparezcan
+            const frases = [
+                "¡Sabía que dirías que sí! ❤️✨",
+                "Por eso te amo muchísimo",
+                "Eres el amor de mi vida ❤️✨",
+                "Eres la mejor novia del mundo ❤️✨",
+                "30.08.24❤️✨ Juntos Hasta El Fin ❤️✨"
+            ];
+
+            // Agregar las frases personalizadas al nuevo contenedor
             nuevaPantalla.innerHTML = `
-                <h1>¡Sabía que dirías que sí! ❤️✨</h1>
-                <p>Por eso te amo muchísimo</p>
-                <p>Eres el amor de mi vida ❤️✨</p>
-                <p>Eres la mejor novia del mundo ❤️✨</p>
-                <p>30.08.24❤️✨ Juntos Hasta El Fin ❤️✨</p>
+                <h1>${frases[0]}</h1>
+                <p>${frases[1]}</p>
+                <p>${frases[2]}</p>
+                <p>${frases[3]}</p>
+                <p>${frases[4]}</p>
             `;
         });
     </script>
